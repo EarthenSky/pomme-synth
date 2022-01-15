@@ -3,6 +3,7 @@
 #[macro_use] // use all macros from vst
 extern crate vst;
 
+mod params;
 mod interface;
 mod editor;
 mod synth;

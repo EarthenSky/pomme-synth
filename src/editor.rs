@@ -1,7 +1,6 @@
 // -------------------- //
 // gui / editor
 
-mod params;
 
 use std::sync::Arc;
 
@@ -13,18 +12,16 @@ use egui_baseview::{EguiWindow, Queue, RenderSettings, Settings};
 use vst::editor::Editor;
 
 use crate::interface::ParentWindow;
-use params::ParamState;
+use crate::params::ParamState;
 
 pub struct PommeEditor {
-    opened: bool,
-    window_handle: Option<WindowHandle>,
     param_state: Arc<ParamState>,
+    window_handle: Option<WindowHandle>,
+    opened: bool,
 }
 
 impl PommeEditor {
-    pub fn new() -> Self {
-        let param_state = Arc::new(ParamState::default());
-        
+    pub fn new(param_state: Arc<ParamState>) -> Self {
         Self {
             opened: false,
             window_handle: None,
@@ -67,6 +64,7 @@ impl PommeEditor {
             {
                 state.amplitude.set(val)
             }
+            
         });
     }
 }

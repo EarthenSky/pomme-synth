@@ -7,10 +7,15 @@ edition = "2021"
 
 [dependencies]
 vst = "0.2.1"
-# log = "0.4.14"
 
-# GUI
+log = "0.4.14"
+simple-logging = "2.0.2"
 
+# alg
+fastrand = "1.6.0"
+rand = "0.8.4"
+
+# gui
 # NOTE: unfortunately we must use this (slightly) older version of baseview
 baseview = {git = "https://github.com/RustAudio/baseview", rev = "f6e99e9aa6f5aeb6b721cb05e4d882a51d995909" } 
 raw-window-handle = { version = "0.4" }
