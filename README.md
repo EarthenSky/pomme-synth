@@ -1,7 +1,7 @@
 # pomme-synth
  A subtractive synth designed around frequency spectrum composition
 
-# rough ui markup
+### rough ui markup
 <img src="devlog/synth-1-mock.png" style="image-rendering: optimizeSpeed;             
     image-rendering: -moz-crisp-edges;        
     image-rendering: -webkit-optimize-contrast;
@@ -9,10 +9,10 @@
     image-rendering: pixelated !important;  
     -ms-interpolation-mode: nearest-neighbor;" style="width: 100%;">
 
-# current features
+### current features
 - gui that maybe works on all platforms?
 
-# future features
+### future features
 - add a 3 mode (highpass, bandpass, lowpass) filter
 - Enable internal combination of multiple instances of the synth
 - Add a builtin (instance local) compressor
@@ -20,5 +20,6 @@
 - Simple asdr for dynamics
 - More complicated dynamics controls. (possibly granular?)
 
-# info
+### info
 - largely inspired by https://www.octasine.com/ , big thanks to them!
+- named pomme, because of the gravity apple thingy & that sound in pomme visually goes up each module, then down again.

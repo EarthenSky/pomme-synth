@@ -32,7 +32,7 @@ impl PommeEditor {
     pub fn open_parented(&mut self, parent: ParentWindow) {
         let settings = Settings {
             window: baseview::WindowOpenOptions {
-                title: String::from("pommesynth-baseview-ohyeah-egui"),
+                title: String::from("pommesynth-egui"),
                 size: Size::new(GUI_WIDTH as f64, GUI_HEIGHT as f64),
                 scale: WindowScalePolicy::SystemScaleFactor,
             },
@@ -55,12 +55,11 @@ impl PommeEditor {
     }
 
     fn egui_render(egui_ctx: &CtxRef, _queue: &mut Queue, state: &mut Arc<ParamState>) {
-        egui::Window::new("egui-baseview pomme synth demo").show(&egui_ctx, |ui| {
+        egui::Window::new("egui-pommesynth").show(&egui_ctx, |ui| {
             ui.heading("Pomme Synth");
             let mut val = state.amplitude.get();
-            if ui
-                .add(egui::Slider::new(&mut val, 0.0..=1.0).text("Gain"))
-                .changed()
+            if ui.add(egui::Slider::new(&mut val, 0.0..=1.0).text("Gain"))
+                 .changed()
             {
                 state.amplitude.set(val)
             }

@@ -12,13 +12,17 @@
 - 
 
 # immediate todo
-- implement static next
-- implement a single polyphonic osc next
+- implement a single polyphonic osc
+- implement a rough outline of the gui
+- implement multiple osc modules
+- implement volume & pitch knobs
+- implement simple env (adsr)
+- implement a filter
+- implement a little dropdown window with settings?
 - 
 
 # todos
 - will want to look into simd stuff
-- will want fastrand probably
 - 
 
 ### teach-notes:
@@ -33,6 +37,7 @@
 - wednesday
 - thursday
 - friday
-- monday -> 0m
-- 
 
+- monday -> 45m
+- tuesday -> 90m
+-

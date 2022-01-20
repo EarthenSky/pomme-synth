@@ -2,11 +2,12 @@
 // vst stuff
 
 use std::sync::Arc;
-use log::info;
+//use log::info;
 
 use vst::plugin::{CanDo, Info, Plugin, Category};
 use vst::plugin::HostCallback;
 use vst::editor::Editor;
+use vst::event::Event;
 
 use vst::api::{Events, Supported};
 use vst::buffer::AudioBuffer;
@@ -62,7 +63,7 @@ impl Plugin for PommeSynth {
             name: "Pomme Synth".to_owned(),
             vendor: "earthen_sky".to_owned(),
             version: 0001,
-            unique_id: 7231254, // Used by hosts to differentiate between plugins
+            unique_id: 7231154, // Used by hosts to differentiate between plugins
 
             inputs: 0,
             outputs: 2, 
@@ -83,17 +84,24 @@ impl Plugin for PommeSynth {
         }
     }
 
-    // Here's the function that allows us to receive events
     fn process_events(&mut self, events: &Events) {
-        // TODO: separate events at a higher level, like octasine
         // NOTE: we can raise events here if we need to
-        self.logic.process_events(&events);
+        for generic_event in events.events() {
+            if let Event::Midi(midi_event) = generic_event {
+                self.logic.process_midi_event(&midi_event);
+            }
+        }
+    }
+
+    fn set_sample_rate(&mut self, rate: f32) {
+        self.logic.set_sample_rate(rate);
     }
 
     fn process(&mut self, buffer: &mut AudioBuffer<f32>) {
-        let (_input_buffer, mut output_buffer) = buffer.split();
-    
-        self.logic.process(&mut output_buffer);
+        let num_samples = buffer.samples();
+        let (_input_buffer, mut output_buffer) = buffer.split();    
+
+        self.logic.process_f32(&mut output_buffer, num_samples);
     }
 
     // TODO: need to figure out what all these things are

@@ -3,11 +3,12 @@
 #[macro_use] // use all macros from vst
 extern crate vst;
 
-mod params;
-mod interface;
-mod editor;
-mod synth;
-mod logic;
+mod params;     // daw visisble params?
+mod interface;  // 
+mod editor;     // gui & visuals
+mod synth;      // the main synth (vst2.4 stuff)
+mod logic;      // math & processing
+mod utils;      // helper objects & functions
 
 use synth::PommeSynth;
 
