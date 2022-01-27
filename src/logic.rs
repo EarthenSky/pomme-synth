@@ -84,7 +84,7 @@ impl PommeLogic {
             
             let mut current_wave: f32 = 0.0;
             for voice in active_voices.iter_mut() {
-                current_wave += square_wave(0.0, voice.elapsed_duration, voice.midi_pitch.hz) as f32; // TODO: there should be some optimal way to do these casts.
+                current_wave += square_wave(voice.elapsed_duration, voice.midi_pitch.hz) as f32; // TODO: there should be some optimal way to do these casts.
                 voice.elapsed_duration += per_sample; // TODO: duration can be turned into u32, unless we go for longer than 10 hours or so
                 voice.deactivate_if_tail_ended(); // TODO: move this; it feels inefficient
             }
@@ -103,8 +103,8 @@ impl PommeLogic {
 
 // TODO: bias not needed?
 // when we have a wave, we want to know: starting posistion & length in wave.
-fn square_wave(bias: f64, index: f64, frequency: f64) -> f64 {
-    let x = bias + index;
+fn square_wave(index: f64, frequency: f64) -> f64 {
+    let x = index;
     if x % (1.0/frequency) < (1.0/frequency) * 0.5 {
         1.0
     } else {
