@@ -24,8 +24,6 @@ pub struct PommeSynth {
 
 impl PommeSynth {
     fn create(host: Option<HostCallback>) -> PommeSynth {
-        // init() goes here
-        // TODO: figure out how the logging works
         simple_logging::log_to_file("pomme_synth.log", log::LevelFilter::Info).unwrap();
 
         let param_state = Arc::new(ParamState::default());
@@ -85,16 +83,19 @@ impl Plugin for PommeSynth {
     }
 
     fn process_events(&mut self, events: &Events) {
-        // NOTE: we can raise events here if we need to
         for generic_event in events.events() {
             if let Event::Midi(midi_event) = generic_event {
-                self.logic.process_midi_event(&midi_event);
+                self.logic.push_midi_event(&midi_event);
             }
         }
     }
 
     fn set_sample_rate(&mut self, rate: f32) {
         self.logic.set_sample_rate(rate);
+    }
+
+    fn set_block_size(&mut self, size: i64) {
+        self.logic.set_block_size(size);
     }
 
     fn process(&mut self, buffer: &mut AudioBuffer<f32>) {

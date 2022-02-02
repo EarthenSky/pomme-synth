@@ -1,3 +1,6 @@
+// TODO: call this file 'util'
+
+use vst::event::MidiEvent;
 
 // -------------------------- //
 // Midi Pitch:
@@ -124,5 +127,35 @@ impl Voice {
         if !self.key_pressed {
             self.active = false;
         }
+    }
+}
+
+// -------------------------- //
+// Custom Note Event:
+
+// TODO: should I call this MidiEvent, but reference it by path?
+
+#[derive(Debug, Copy, Clone, Hash, Eq)]
+pub struct NoteEvent {
+    pub event: u8,
+    pub pitch: u8,
+    pub velocity: u8,
+    pub delta_frames: i32,  // num frames since the start of the current block
+}
+impl NoteEvent {
+    pub fn from(e: &MidiEvent) -> NoteEvent {
+        NoteEvent {
+            event: e.data[0],
+            pitch: e.data[1],
+            velocity: e.data[2],
+            delta_frames: e.delta_frames,
+        }
+    }
+}
+impl PartialEq for NoteEvent {
+    fn eq(&self, other: &Self) -> bool {
+        // We only care about the order of events in the current block, and we 
+        // empty the queue when process is called.
+        self.delta_frames == other.delta_frames
     }
 }

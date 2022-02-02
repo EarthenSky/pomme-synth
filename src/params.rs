@@ -1,13 +1,13 @@
-use vst::util::AtomicFloat;
+use atomic_float::AtomicF64;
 
 pub struct ParamState {
-    pub amplitude: AtomicFloat,
+    pub amplitude: AtomicF64,
 }
 
 impl Default for ParamState {
     fn default() -> ParamState {
         ParamState {
-            amplitude: AtomicFloat::new(0.5),
+            amplitude: AtomicF64::new(0.5),
         }
     }
 }

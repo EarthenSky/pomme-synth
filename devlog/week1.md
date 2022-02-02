@@ -7,12 +7,15 @@
 - fml found a template doing exactly what I wanted... https://github.com/DGriffin91/egui_baseview_test_vst2/blob/main/src/lib.rs
 - got egui_webview working (albeit with a bit of glitchy behaviour)
 
+# week... 2
+- got a polyphonic osc working & with correct event handling
+
 # res:
 - https://github.com/antonok-edm/ampli-Fe
-- https://github.com/greatest-ape/OctaSine -> woahowahowah -> this does midi handling wrong? -> do an issue request
+- https://github.com/greatest-ape/OctaSine
+- https://icons8.com/lunacy -> for designing gui
 
-# immediate todo
-- implement a single polyphonic osc
+# immediate todo:
 - implement a rough outline of the gui
 - implement multiple osc modules
 - implement volume & pitch knobs
@@ -25,6 +28,8 @@
 - https://github.com/free-audio/clap/blob/b21634849ee95ad341d4aa406d2e011e816ae68a/include/clap/plugin-factory.h as a backend?
 - look for a standard MIDI crate
 - TODO: when writing simd support, write a macro to make it so that the math is very clear, then do an hn post about it.
+- analyze https://github.com/askeksa/Cinter to see if I'm missing anything or not
+- I think druid gui is more in line with what this synth is trying to accomplish (& for the daw later)
 
 ### teach-notes:
 - rust workspaces are interesting, and useful for large projects that are composed of multiple parts. However, for smaller projects they may make things more difficult.

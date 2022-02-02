@@ -1,8 +1,8 @@
 // -------------------- //
 // gui / editor
 
-
 use std::sync::Arc;
+use core::sync::atomic::Ordering;
 
 use baseview::{Size, WindowHandle, WindowScalePolicy};
 
@@ -55,13 +55,14 @@ impl PommeEditor {
     }
 
     fn egui_render(egui_ctx: &CtxRef, _queue: &mut Queue, state: &mut Arc<ParamState>) {
+        // NOTE: when accessing parameters from our parameter state, we can use relaxed ordering 
+        // because this is the only location where the param state can be modified.
         egui::Window::new("egui-pommesynth").show(&egui_ctx, |ui| {
             ui.heading("Pomme Synth");
-            let mut val = state.amplitude.get();
-            if ui.add(egui::Slider::new(&mut val, 0.0..=1.0).text("Gain"))
-                 .changed()
+            let mut val = state.amplitude.load(Ordering::Relaxed);
+            if ui.add(egui::Slider::new(&mut val, 0.0..=1.0).text("Gain")).changed()
             {
-                state.amplitude.set(val)
+                state.amplitude.store(val, Ordering::Relaxed);
             }
             
         });

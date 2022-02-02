@@ -3,6 +3,8 @@
 #[macro_use] // use all macros from vst
 extern crate vst;
 
+extern crate priority_queue;
+
 mod params;     // daw visisble params?
 mod interface;  // 
 mod editor;     // gui & visuals
