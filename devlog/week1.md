@@ -9,6 +9,7 @@
 
 # week... 2
 - got a polyphonic osc working & with correct event handling
+- 
 
 # res:
 - https://github.com/antonok-edm/ampli-Fe
@@ -16,7 +17,7 @@
 - https://icons8.com/lunacy -> for designing gui
 
 # immediate todo:
-- implement a rough outline of the gui
+- implement a rough outline of the gui -> figure out how to build & test ONLY the gui, without the vst part -> pass the function to another cargo module?
 - implement multiple osc modules
 - implement volume & pitch knobs
 - implement simple env (adsr)
