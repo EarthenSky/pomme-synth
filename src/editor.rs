@@ -29,25 +29,37 @@ impl PommeEditor {
         }
     }
 
-    pub fn open_parented(&mut self, parent: ParentWindow) {
-        let settings = Settings {
-            window: baseview::WindowOpenOptions {
-                title: String::from("pommesynth-egui"),
-                size: Size::new(GUI_WIDTH as f64, GUI_HEIGHT as f64),
-                scale: WindowScalePolicy::SystemScaleFactor,
-            },
-            render_settings: RenderSettings::default(),
-        };
+    #[cfg(feature = "gui_only")]
+    pub fn open_blocking(&self) {
+        EguiWindow::open_blocking(
+            PommeEditor::egui_settings(),
+            self.param_state.clone(),
+            Self::egui_init,
+            Self::egui_render,
+        );
+    }
 
+    pub fn open_parented(&mut self, parent: ParentWindow) {
         let window_handle = EguiWindow::open_parented(
             &parent,
-            settings,
+            PommeEditor::egui_settings(),
             self.param_state.clone(),
             Self::egui_init,
             Self::egui_render,
         );
 
         self.window_handle = Some(window_handle);
+    }
+
+    fn egui_settings() -> Settings {
+        Settings {
+            window: baseview::WindowOpenOptions {
+                title: String::from("pommesynth-egui"),
+                size: Size::new(GUI_WIDTH as f64, GUI_HEIGHT as f64),
+                scale: WindowScalePolicy::SystemScaleFactor,
+            },
+            render_settings: RenderSettings::default(),
+        }
     }
 
     fn egui_init(_egui_ctx: &CtxRef, _queue: &mut Queue, _state: &mut Arc<ParamState>) {

@@ -1,6 +1,11 @@
 # pomme-synth
  A subtractive synth designed around frequency spectrum composition
 
+### how to build:
+- `cd pomme-synth/`
+- genrate vst2: `cargo build --release`
+- gui only: `cargo run --release --features "gui_only"`
+
 ### rough ui markup
 <img src="devlog/synth-1-mock.png" style="image-rendering: optimizeSpeed;             
     image-rendering: -moz-crisp-edges;        

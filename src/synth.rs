@@ -23,7 +23,7 @@ pub struct PommeSynth {
 }
 
 impl PommeSynth {
-    fn create(host: Option<HostCallback>) -> PommeSynth {
+    pub fn create(host: Option<HostCallback>) -> PommeSynth {
         simple_logging::log_to_file("pomme_synth.log", log::LevelFilter::Info).unwrap();
 
         let param_state = Arc::new(ParamState::default());
@@ -35,6 +35,13 @@ impl PommeSynth {
             editor: Some(editor),
             logic: logic,
             _host: host,
+        }
+    }
+
+    #[cfg(feature = "gui_only")]
+    pub fn show_editor(&self) {
+        if let Some(editor) = &self.editor {
+            editor.open_blocking();
         }
     }
 }
