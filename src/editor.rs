@@ -63,23 +63,64 @@ impl PommeEditor {
     }
 
     fn egui_init(_egui_ctx: &CtxRef, _queue: &mut Queue, _state: &mut Arc<ParamState>) {
-        // Called once before the first frame. Allows you to do setup code    
+        // Called once before the first frame. Allows you to do setup code
+
+        // NOTE: since egui is imgui, this will be very helpful!
+
     }
 
     fn egui_render(egui_ctx: &CtxRef, _queue: &mut Queue, state: &mut Arc<ParamState>) {
         // NOTE: when accessing parameters from our parameter state, we can use relaxed ordering 
         // because this is the only location where the param state can be modified.
-        egui::Window::new("egui-pommesynth").show(&egui_ctx, |ui| {
-            ui.heading("Pomme Synth");
+
+        let master_bus = egui::panel::SidePanel::right("master bus").resizable(false);
+        master_bus.show(&egui_ctx, |ui| {
+            ui.heading("Master Bus"); 
+            
             let mut val = state.amplitude.load(Ordering::Relaxed);
             if ui.add(egui::Slider::new(&mut val, 0.0..=1.0).text("Gain")).changed()
             {
                 state.amplitude.store(val, Ordering::Relaxed);
             }
-            
+
+        });
+        
+        egui::panel::CentralPanel::default().show(&egui_ctx, |ui| {
+            ui.heading("Pomme Synth");
+            ui.separator();
+
+            egui::ScrollArea::horizontal().show(ui, |ui| {
+                ui.with_layout(egui::Layout::left_to_right().with_cross_justify(true), |ui| {
+                    for rack in &*state.rack_list {
+                        rack.draw(ui);
+                    }
+                });
+            });
         });
     }
 }
+
+// -------------------------------------- //
+// param struct draw functions
+
+impl crate::params::Rack {
+    pub fn draw(&self, ui: &mut egui::Ui) {
+        ui.group(|ui: &mut egui::Ui| {
+            egui::ScrollArea::vertical().show(ui, |ui| {
+                ui.label(self.name.to_owned()); // TODO: this is a copy (slow)
+                ui.label(self.name.to_owned()); // TODO: this is a copy (slow)
+                ui.label(self.name.to_owned()); // TODO: this is a copy (slow)
+                //ui.separator();
+                //ui.set_width(200.0);
+
+                //ui.set_height(ui.available_height());
+                //ui.allocate_space(ui.available_size());
+            });
+        });
+    }
+}
+
+// ------------------------------------- //
 
 pub const GUI_WIDTH: usize = 12 * 66;
 pub const GUI_HEIGHT: usize = 12 * 61;

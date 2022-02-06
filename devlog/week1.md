@@ -9,6 +9,8 @@
 
 # week... 2
 - got a polyphonic osc working & with correct event handling
+- determined that egui will not work for my cases, since it is pretty buggy -> will use iced instead 
+  - https://www.reddit.com/r/rust/comments/rmvwvy/gui_could_someone_please_explain_the_differences/
 - 
 
 # res:

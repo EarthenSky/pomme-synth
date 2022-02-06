@@ -1,16 +1,42 @@
 use atomic_float::AtomicF64;
 
+// TODO: module & rack params should be part of the synth's internal param state
+pub struct Module {
+    name: String
+}
+
+pub struct Rack {
+    pub color: egui::Color32,
+    pub name: String,
+    pub modules: Vec<Module>,
+}
+impl Rack {
+    pub fn new() -> Self {
+        Rack {
+            color: egui::Color32::BROWN,
+            name: "default rack name".to_owned(),
+            modules: Vec::new(),
+        }
+    }
+}
+
+// ----------------------------------------- //
+
 pub struct ParamState {
     pub amplitude: AtomicF64,
+    pub rack_list: Vec<Rack>,
 }
 
 impl Default for ParamState {
     fn default() -> ParamState {
         ParamState {
             amplitude: AtomicF64::new(0.5),
+            rack_list: vec![Rack::new(), Rack::new(), Rack::new()],
         }
     }
 }
+
+// ----------------------------------------- //
 
 /*
 impl PluginParameters for MyState {
