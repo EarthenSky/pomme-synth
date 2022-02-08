@@ -4,7 +4,7 @@
 use std::sync::Arc;
 
 
-use baseview::{Size, WindowHandle, WindowScalePolicy};
+use baseview::{Size, WindowScalePolicy};
 use iced_baseview::{IcedWindow, Settings};
 
 //use egui::CtxRef;

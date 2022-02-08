@@ -7,8 +7,11 @@ use core::sync::atomic::Ordering;
 //use baseview::{};
 
 use iced_baseview::{executor, WindowQueue, Application, Command};
-use iced_baseview::{slider, Element, Container, Column, Slider, Text};
+use iced_baseview::{slider, scrollable, Element, Container, Column, Row, Slider, Text, Rule};
 use iced_baseview::{Length, Alignment};
+
+// for the time being
+use iced_baseview::*;
 
 // TODO: state should probably be the same as use crate::params::ParamState.... or not?
 
@@ -26,6 +29,8 @@ pub struct PommeGui {
     slider_state: slider::State,
     slider_value: u32,
     slider_text: String,
+
+    rack_view_state: scrollable::State,
 }
 
 impl Application for PommeGui {
@@ -40,6 +45,8 @@ impl Application for PommeGui {
             slider_state: slider::State::new(),
             slider_value: 0,
             slider_text: String::from("0"),
+
+            rack_view_state: scrollable::State::new(),
         };
 
         (gui, Command::none())
@@ -67,14 +74,64 @@ impl Application for PommeGui {
             Message::SliderChanged,
         );
 
-        let content = Column::new()
-            .width(Length::FillPortion(1))
-            .align_items(Alignment::Center)
+        let rack_view = Scrollable::new(&mut self.rack_view_state)
+            .width(Length::FillPortion(7))
+            .height(Length::Fill)
             .padding(20)
             .spacing(20)
+            //.align_items(Alignment)
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing A"))
+            .push(Text::new("Thing B"));
+
+        let main_bus = Column::new()
+            .width(Length::FillPortion(2))
+            .height(Length::Fill)
+            .padding(20)
+            .spacing(20)
+            .push(Text::new("Main Bus"))
+            .push(Rule::horizontal(10))
             .push(Text::new("Gain:"))
             .push(slider_widget)
             .push(Text::new(self.slider_text.as_str()));
+            
+        let content = Row::new()
+            .width(Length::Fill)
+            .height(Length::Fill)
+            //.align_items(Alignment::Center)
+            .push(rack_view)
+            .push(main_bus);
 
         Container::new(content)
             .width(Length::Fill)

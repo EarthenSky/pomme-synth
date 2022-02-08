@@ -22,14 +22,12 @@ priority-queue = "1.2.1"
 atomic_float = "0.1.0"
 
 # gui
-# NOTE: unfortunately we must use this (slightly) older version of baseview
+# NOTE: unfortunately we must use this (slightly) older version of baseview TODO: update to the newest version
 baseview = {git = "https://github.com/RustAudio/baseview", rev = "004065e9a43e79751040879c572d95b9b63e0edc" } 
 raw-window-handle = { version = "0.4" }
 
+# TODO: iced = "0.3.0"
 iced_baseview = { git = "https://github.com/BillyDM/iced_baseview.git", branch = "iced_git" }
-
-#egui-baseview = {git = "https://github.com/BillyDM/egui-baseview", rev = "b7436c02309347e49ffd4491bf31cdef6e759eb7" }
-#egui = "0.15" # have to use this older version of egui as well
 
 [lib]
 name = "pomme_synth_vst"
