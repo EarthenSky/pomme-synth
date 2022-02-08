@@ -1,56 +1,70 @@
 // -------------------- //
-// gui / editor
+// editor
 
 use std::sync::Arc;
-use core::sync::atomic::Ordering;
+
 
 use baseview::{Size, WindowHandle, WindowScalePolicy};
+use iced_baseview::{IcedWindow, Settings};
 
-use egui::CtxRef;
-use egui_baseview::{EguiWindow, Queue, RenderSettings, Settings};
+//use egui::CtxRef;
+//use egui_baseview::{EguiWindow, Queue, RenderSettings, Settings};
 
 use vst::editor::Editor;
 
-use crate::interface::ParentWindow;
+use crate::gui::PommeGui;
 use crate::params::ParamState;
 
 pub struct PommeEditor {
-    param_state: Arc<ParamState>,
-    window_handle: Option<WindowHandle>,
+    params: Arc<ParamState>,
     opened: bool,
 }
 
 impl PommeEditor {
-    pub fn new(param_state: Arc<ParamState>) -> Self {
+    pub fn new(params: Arc<ParamState>) -> Self {
         Self {
+            params: params,
             opened: false,
-            window_handle: None,
-            param_state: param_state,
         }
     }
 
     #[cfg(feature = "gui_only")]
     pub fn open_blocking(&self) {
-        EguiWindow::open_blocking(
-            PommeEditor::egui_settings(),
-            self.param_state.clone(),
-            Self::egui_init,
-            Self::egui_render,
+        let settings = Self::iced_settings(self.params.clone());
+
+        IcedWindow::<PommeGui>::open_blocking(
+            settings,
         );
     }
 
     pub fn open_parented(&mut self, parent: ParentWindow) {
-        let window_handle = EguiWindow::open_parented(
-            &parent,
-            PommeEditor::egui_settings(),
-            self.param_state.clone(),
-            Self::egui_init,
-            Self::egui_render,
-        );
+        let settings = Self::iced_settings(self.params.clone());
 
-        self.window_handle = Some(window_handle);
+        IcedWindow::<PommeGui>::open_parented(
+            &parent,
+            settings,
+        );
     }
 
+    fn iced_settings(param_state: Arc<ParamState>) -> Settings<Arc<ParamState>> {
+        Settings {
+            window: baseview::WindowOpenOptions {
+                title: String::from("iced_baseview pomme synth title"),
+                size: Size::new(GUI_WIDTH as f64, GUI_HEIGHT as f64), // TODO: connect this with the other gui sizing stuff
+                
+                // Windows currently needs scale factor 1.0, or GUI contents
+                // will be too large for window (from octasine)
+                #[cfg(not(target_os = "windows"))]
+                scale: WindowScalePolicy::SystemScaleFactor,
+                #[cfg(target_os = "windows")]
+                scale: WindowScalePolicy::ScaleFactor(1.0),
+            },
+            ignore_non_modifier_keys: false, // TODO: want true eventually?
+            flags: param_state,
+        }
+    }
+
+    /*
     fn egui_settings() -> Settings {
         Settings {
             window: baseview::WindowOpenOptions {
@@ -97,27 +111,7 @@ impl PommeEditor {
                 });
             });
         });
-    }
-}
-
-// -------------------------------------- //
-// param struct draw functions
-
-impl crate::params::Rack {
-    pub fn draw(&self, ui: &mut egui::Ui) {
-        ui.group(|ui: &mut egui::Ui| {
-            egui::ScrollArea::vertical().show(ui, |ui| {
-                ui.label(self.name.to_owned()); // TODO: this is a copy (slow)
-                ui.label(self.name.to_owned()); // TODO: this is a copy (slow)
-                ui.label(self.name.to_owned()); // TODO: this is a copy (slow)
-                //ui.separator();
-                //ui.set_width(200.0);
-
-                //ui.set_height(ui.available_height());
-                //ui.allocate_space(ui.available_size());
-            });
-        });
-    }
+    }*/
 }
 
 // ------------------------------------- //
@@ -150,5 +144,42 @@ impl Editor for PommeEditor {
 
     fn is_open(&mut self) -> bool {
         self.opened
+    }
+}
+
+// -------------------- //
+// host window handle
+
+use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
+
+// This is a wrapper object for the window handle of the host application (DAW)
+pub struct ParentWindow(pub *mut ::core::ffi::c_void);
+
+unsafe impl HasRawWindowHandle for ParentWindow {
+    #[cfg(target_os = "macos")]
+    fn raw_window_handle(&self) -> RawWindowHandle {
+        let mut handle = raw_window_handle::AppKitHandle::empty();
+
+        handle.ns_view = self.0;
+
+        RawWindowHandle::AppKit(handle)
+    }
+
+    #[cfg(target_os = "windows")]
+    fn raw_window_handle(&self) -> RawWindowHandle {
+        let mut handle = raw_window_handle::Win32Handle::empty();
+
+        handle.hwnd = self.0;
+
+        RawWindowHandle::Win32(handle)
+    }
+
+    #[cfg(target_os = "linux")]
+    fn raw_window_handle(&self) -> RawWindowHandle {
+        let mut handle = raw_window_handle::XcbHandle::empty();
+
+        handle.window = self.0 as u32;
+
+        RawWindowHandle::Xcb(handle)
     }
 }

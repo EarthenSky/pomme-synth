@@ -6,14 +6,14 @@ pub struct Module {
 }
 
 pub struct Rack {
-    pub color: egui::Color32,
+    //pub color: egui::Color32,
     pub name: String,
     pub modules: Vec<Module>,
 }
 impl Rack {
     pub fn new() -> Self {
         Rack {
-            color: egui::Color32::BROWN,
+            //color: egui::Color32::BROWN,
             name: "default rack name".to_owned(),
             modules: Vec::new(),
         }

@@ -6,8 +6,9 @@ extern crate vst;
 extern crate priority_queue;
 
 mod params;     // daw visisble params?
-mod interface;  // 
-mod editor;     // gui & visuals
+mod editor;     // managing window & connection to parent (daw)
+mod gui;        // iced gui code
+
 mod synth;      // the main synth (vst2.4 stuff)
 mod logic;      // math & processing
 mod utils;      // helper objects & functions

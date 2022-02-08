@@ -11,7 +11,7 @@
 - got a polyphonic osc working & with correct event handling
 - determined that egui will not work for my cases, since it is pretty buggy -> will use iced instead 
   - https://www.reddit.com/r/rust/comments/rmvwvy/gui_could_someone_please_explain_the_differences/
-- 
+- got iced working 
 
 # res:
 - https://github.com/antonok-edm/ampli-Fe
@@ -33,6 +33,7 @@
 - TODO: when writing simd support, write a macro to make it so that the math is very clear, then do an hn post about it.
 - analyze https://github.com/askeksa/Cinter to see if I'm missing anything or not
 - I think druid gui is more in line with what this synth is trying to accomplish (& for the daw later)
+- baseplug-examples might be a good backend to support later, too
 
 ### teach-notes:
 - rust workspaces are interesting, and useful for large projects that are composed of multiple parts. However, for smaller projects they may make things more difficult.
