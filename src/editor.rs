@@ -4,7 +4,7 @@
 use std::sync::Arc;
 
 
-use baseview::{Size, WindowScalePolicy};
+use baseview::{Size, WindowScalePolicy, WindowOpenOptions};
 use iced_baseview::{IcedWindow, Settings};
 
 //use egui::CtxRef;
@@ -48,7 +48,7 @@ impl PommeEditor {
 
     fn iced_settings(param_state: Arc<ParamState>) -> Settings<Arc<ParamState>> {
         Settings {
-            window: baseview::WindowOpenOptions {
+            window: WindowOpenOptions {
                 title: String::from("iced_baseview pomme synth title"),
                 size: Size::new(GUI_WIDTH as f64, GUI_HEIGHT as f64), // TODO: connect this with the other gui sizing stuff
                 
@@ -59,7 +59,7 @@ impl PommeEditor {
                 #[cfg(target_os = "windows")]
                 scale: WindowScalePolicy::ScaleFactor(1.0),
             },
-            ignore_non_modifier_keys: false, // TODO: want true eventually?
+            //ignore_non_modifier_keys: false, // TODO: want true eventually? // TODO: why is this gone?
             flags: param_state,
         }
     }

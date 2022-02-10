@@ -22,16 +22,23 @@ priority-queue = "1.2.1"
 atomic_float = "0.1.0"
 
 # gui
-# NOTE: unfortunately we must use this (slightly) older version of baseview TODO: update to the newest version
-baseview = {git = "https://github.com/RustAudio/baseview", rev = "004065e9a43e79751040879c572d95b9b63e0edc" } 
 raw-window-handle = { version = "0.4" }
 
-# TODO: iced = "0.3.0"
-iced_baseview = { git = "https://github.com/BillyDM/iced_baseview.git", branch = "iced_git" }
+# Note: getting these dependencies to work was terrifying
+baseview = { git = "https://github.com/RustAudio/baseview.git", rev = "f6e99e9aa6f5aeb6b721cb05e4d882a51d995909" }
+iced_baseview = { git = "https://github.com/BillyDM/iced_baseview.git", rev = "ac7cf12224fd922c3240dd86e7505f7d619ab7ea" } # main as of 2022-02-10
 
 # for custom widgets (iced)
-#iced_native = "0.2.0"
-#iced_wgpu = "0.2.0"
+#iced_native = "0.4.0"
+#iced_wgpu = "0.4.0"
+
+#iced_core = "0.4"
+iced_native = "0.4"
+iced_graphics = "0.2"
+
+# TODO: eventually implement support for wpu & glow
+#iced_glow = { git = "https://github.com/iced-rs/iced.git", rev = "26d053a", optional = true }
+#iced_wgpu = { git = "https://github.com/iced-rs/iced.git", rev = "26d053a", optional = true }
 
 [lib]
 name = "pomme_synth_vst"
