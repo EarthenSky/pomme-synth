@@ -5,7 +5,6 @@ use std::sync::Arc;
 use core::sync::atomic::Ordering;
 
 //use baseview::{};
-
 use iced_baseview::{executor, WindowQueue, Application, Command};
 use iced_baseview::{slider, scrollable, Element, Container, Column, Row, Slider, Text, Rule};
 use iced_baseview::{Length, Alignment};
@@ -15,6 +14,7 @@ use iced_baseview::*;
 
 // TODO: state should probably be the same as use crate::params::ParamState.... or not?
 
+use crate::widgets::ScrollableH;
 use crate::params::ParamState;
 
 #[derive(Debug, Clone)]

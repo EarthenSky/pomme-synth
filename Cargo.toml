@@ -29,6 +29,10 @@ raw-window-handle = { version = "0.4" }
 # TODO: iced = "0.3.0"
 iced_baseview = { git = "https://github.com/BillyDM/iced_baseview.git", branch = "iced_git" }
 
+# for custom widgets (iced)
+#iced_native = "0.2.0"
+#iced_wgpu = "0.2.0"
+
 [lib]
 name = "pomme_synth_vst"
 crate-type = ["cdylib"]

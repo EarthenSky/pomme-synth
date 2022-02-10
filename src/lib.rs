@@ -6,6 +6,8 @@ extern crate vst;
 extern crate priority_queue;
 
 mod params;     // daw visisble params?
+
+mod widgets;    // custom iced gui widgets
 mod editor;     // managing window & connection to parent (daw)
 mod gui;        // iced gui code
 
